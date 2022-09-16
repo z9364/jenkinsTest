@@ -65,11 +65,11 @@ public class RandomController {
         try {
             PrintWriter writer = response.getWriter();
 
-            if(Config.files.isEmpty()){
-                writer.println("is empty!");
-                return;
-            }
-            for(String fileName : Config.files){
+            File[] files = new File(Config.IMAGE_SAVE_PATH).listFiles();
+
+            assert files != null;
+            for(File file : files){
+                String fileName = file.getName();
                 writer.println("<a href='/" + fileName + "' target='_blank' > ");
                 writer.println(fileName);
                 writer.println(" </a></br>");
@@ -185,7 +185,6 @@ public class RandomController {
         logger.info("图片保存至  ==>  " + savePath);
         logger.debug("saveImage耗时：" + (new Date().getTime() - t1));
 
-        Config.files.add(fileName.substring(1).replace(".png", ".jpg"));
         return savePath;
     }
 }
